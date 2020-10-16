@@ -8,32 +8,32 @@ insert into company(company_id, name) values(null, "Leelay's Electronics");
 -- creating dummy departments
 -- scripts to run to fill with dummy data
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Sales",1000000.0,"111", 1);
+    values(null,"Sales",1000000.0,"111", 6);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Electronics",125000.0,"222", 1);
+    values(null,"Electronics",125000.0,"222", 6);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Head Quarters",100.0,"333", 1);
+    values(null,"Head Quarters",100.0,"333", 6);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"IT" ,375000.0, "444", 1);
+    values(null,"IT" ,375000.0, "444", 6);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Geek Squad",4000.0,"321", 1);
+    values(null,"Geek Squad",4000.0,"321", 6);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Food & Bevrage", 7000.0, "545", 1);
+    values(null,"Food & Bevrage", 7000.0, "545", 6);
 -- --------------lelia's departments--------------------------
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Sales",100.0,"111", 1);
+    values(null,"Sales",100.0,"111", 7);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"XL Monicals",2000.0,"919", 2);
+    values(null,"XL Monicals",2000.0,"919", 7);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Electronics",125.0,"222", 2);
+    values(null,"Electronics",125.0,"222", 7);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Head Quarters",110.0,"333", 2);
+    values(null,"Head Quarters",110.0,"333", 7);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"IT" ,375.0, "444", 2);
+    values(null,"IT" ,375.0, "444", 7);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Geek Squad",40.0,"321", 2);
+    values(null,"Geek Squad",40.0,"321", 7);
 insert into department(department_id, name, budget, phone_extension, company_id) 
-    values(null,"Food & Bevrage", 700.0, "545", 2);
+    values(null,"Food & Bevrage", 700.0, "545", 7);
 
 -- dummy addresses
 insert into address(address_id, address, state)
@@ -79,7 +79,7 @@ insert into employee(employee_id,first_name, last_name, email, phone, date_of_bi
     values(null,"Deb", "Marshall","d@d.com" ,"321-321-3211" ,"2010-11-01" , 3000.0,1, 2, 2);
 
 insert into employee(employee_id,first_name, last_name, email, phone, date_of_birth, salary, department_id, address_id, company_id) 
-    values(null,"Daniel", "DeLuis","d@d.com" ,"444-444-4444" ,"2010-12-01" , 3000.0,5, 3, 1);
+    values(null,"Daniel", "DeLuis","danile@d.com" ,"444-444-4444" ,"2010-12-01" , 3000.0,5, 3, 1);
 
 insert into employee(employee_id,first_name, last_name, email, phone, date_of_birth, salary, department_id, address_id, company_id) 
     values(null,"Trix", "Bunnieton","t@t.com" ,"545-455-5555" ,"2010-22-01" , 3430.0,5, 4, 2);
@@ -116,6 +116,3 @@ insert into employee(employee_id,first_name, last_name, email, phone, date_of_bi
 
 insert into employee(employee_id,first_name, last_name, email, phone, date_of_birth, salary, department_id, address_id, company_id) 
     values(null,"Josh", "MacDonald","joe@google.com" ,"123-555-0020" ,"1990-08-27" , 65000.0,1, 5, 1);
-
-
-
