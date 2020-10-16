@@ -1,4 +1,3 @@
-<<<<<<< HEAD:JBDC_EMS.sql
 CREATE DATABASE JDBC_EMS;
 
 use JDBC_EMS;
@@ -31,45 +30,15 @@ CREATE TABLE employee(
 	employee_id int auto_increment,
     first_name varchar(50) NOT NULL,
     last_name varchar(50) NOT NULL,
-=======
-create table department(
-	department_id int PRIMARY KEY auto_increment,
-    name varchar(50) not null,
-    budget double,
-    phone_extension varchar(3)
-    );
-
-create table address(
-	address_id int PRIMARY KEY auto_increment,
-    address varchar(50) not null,
-    state char(2) not null
-    );
-
-create table company(
-	company_id int PRIMARY KEY auto_increment,
-    name varchar(50) not null
-    );
-
-create table employee(
-	employee_id int PRIMARY KEY auto_increment,
-    first_name varchar(50) not null,
-    last_name varchar(50) not null,
->>>>>>> 97c72302aa5630e41a2525f68af6324a18eb5fba:SQL Files/JDBC_EMS.sql
 	date_of_birth date,
     email varchar(50) NOT NULL UNIQUE,
     phone char(12) NOT NULL UNIQUE,
     salary double,
-<<<<<<< HEAD:JBDC_EMS.sql
     department_id int NOT NULL,
     address_id int NOT NULL,
     company_id int NOT NULL,
-=======
-    department_id int not null,
->>>>>>> 97c72302aa5630e41a2525f68af6324a18eb5fba:SQL Files/JDBC_EMS.sql
     FOREIGN KEY (department_id) references department(department_id),
-    address_id int not null,
     FOREIGN KEY (address_id) references address(address_id),
-<<<<<<< HEAD:JBDC_EMS.sql
     FOREIGN KEY (company_id) references company(company_id),
     PRIMARY KEY(employee_id)
 );
@@ -117,8 +86,3 @@ INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, p
 INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Frank', 'Pruitt', '1987-01-09', '3g7sc3azwhw@temporary-mail.net', '605-301-0440', 60000, 1, 3, 3);
 INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Harry', 'Pina', '1980-05-15', 'onaurc68cvl@temporary-mail.net', '713-203-2900', 120000, 1, 4, 4);
 INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Linda', 'Taylor', '1987-12-13', 'l79509j8ibp@temporary-mail.net', '417-246-6563', 35000, 1, 5, 5);
-=======
-    company_id int not null,
-    FOREIGN KEY (company_id) references company(company_id)
-    );
->>>>>>> 97c72302aa5630e41a2525f68af6324a18eb5fba:SQL Files/JDBC_EMS.sql
