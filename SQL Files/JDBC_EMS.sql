@@ -1,23 +1,23 @@
 create table department(
-	department_id int PRIMARY KEY not null,
+	department_id int PRIMARY KEY auto_increment,
     name varchar(50) not null,
     budget double,
     phone_extension varchar(3)
     );
 
 create table address(
-	address_id int PRIMARY KEY not null,
+	address_id int PRIMARY KEY auto_increment,
     address varchar(50) not null,
     state char(2) not null
     );
 
 create table company(
-	company_id int PRIMARY KEY not null,
+	company_id int PRIMARY KEY auto_increment,
     name varchar(50) not null
     );
 
 create table employee(
-	employee_id int PRIMARY KEY auto_increment not null,
+	employee_id int PRIMARY KEY auto_increment,
     first_name varchar(50) not null,
     last_name varchar(50) not null,
 	date_of_birth date,
