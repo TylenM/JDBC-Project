@@ -1,4 +1,4 @@
-package com.congnixia.jump.jdbc.ems;
+package com.cognixia.jump.jdbc.ems;
 
 public class Address {
 
