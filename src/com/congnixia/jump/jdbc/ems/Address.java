@@ -1,3 +1,5 @@
+package com.congnixia.jump.jdbc.ems;
+
 public class Address {
 
 	private int id;

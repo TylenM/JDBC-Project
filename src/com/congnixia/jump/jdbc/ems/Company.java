@@ -1,3 +1,4 @@
+package com.congnixia.jump.jdbc.ems;
 public class Company {
 	private int id;
 	private String name;
