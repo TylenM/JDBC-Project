@@ -36,7 +36,7 @@ public class EMSResultSets {
 				Double salary = rs.getDouble("salary");
 				int department_id = rs.getInt("department_id");
 				int address_id = rs.getInt("address_id");
-				int company_id = rs.getInt("comapny_id");
+				int company_id = rs.getInt("company_id");
 				
 				System.out.println("ID: " + employee_id + " || Name: " + employee_name + " || Date of Birth: " + dob + " || Email: " + email + " || Phone: " + phone + " || Phone: " + salary + " || Department ID: " + department_id + " || Address ID: " + address_id + " || Company ID: " + company_id);
 				

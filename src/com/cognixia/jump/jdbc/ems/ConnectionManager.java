@@ -19,7 +19,7 @@ public class ConnectionManager {
 			System.out.println("Registered Driver.");
 			
 			Properties props = new Properties();
-			props.load(new FileInputStream("resouces/config.properties"));
+			props.load(new FileInputStream("resources/config.properties"));
 			
 			connection = DriverManager.getConnection(props.getProperty("url"), props.getProperty("username"), props.getProperty("password"));
 			System.out.println("Connection Established");
