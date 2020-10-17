@@ -27,11 +27,7 @@ public class DeptDAORunner {
 		//dept.setName("hello");
 		
 		System.out.println("\n\nGet single Department by name");
-		try {
-			System.out.println(deptDAO.getDepartmentByName("Astrohnomy"));
-		} catch (DepartmentNotFoundException e1) {
-			System.out.println("Department wasn't found");;
-		}
+		System.out.println(deptDAO.getDepartmentByName("Astrohnomy"));
 		
 		
 		System.out.println("\n\nInsert new department");
@@ -55,14 +51,6 @@ public class DeptDAORunner {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-//		try {
-//			deptDAO.closeConnection();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 	}
 

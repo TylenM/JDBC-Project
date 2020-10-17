@@ -2,7 +2,7 @@ package com.cognixia.jump.jdbc.ems.interfaces;
 
 import java.util.List;
 
-import com.congnixia.jump.jdbc.dao.Department;
+import com.cognixia.jump.jdbc.ems.models.*;
 
 public interface DepartmentDAO {
 
@@ -55,7 +55,7 @@ public interface DepartmentDAO {
 	  */
 	public boolean updateDepartment(int deptId);
 
-	public List<Employees> allEmployeesInDep()l
+	public List<Employee> allEmployeesInDep();
 	
 	
 	

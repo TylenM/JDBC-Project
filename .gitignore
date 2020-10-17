@@ -13,3 +13,4 @@ bin/*
 *.rar
 
 resources/config.properties
+/bin/
