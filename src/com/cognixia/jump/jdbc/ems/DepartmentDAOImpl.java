@@ -48,7 +48,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		ResultSet rs = null;
 		
-		try(PreparedStatement pstmt = conn.prepareStatement("select * from department where dept_id = ?")) {
+		try(PreparedStatement pstmt = conn.prepareStatement("select * from department where department_id = ?")) {
 			
 			pstmt.setInt(1, deptId);
 			

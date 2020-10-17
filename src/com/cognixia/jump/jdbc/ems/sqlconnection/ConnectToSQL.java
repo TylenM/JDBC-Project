@@ -15,11 +15,11 @@ public class ConnectToSQL {
 	
 	private static void makeConnection(){
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("----Registered Driver!");
 			
 			Properties props = new Properties();
-			props.load(new FileInputStream("resource/config.properties"));
+			props.load(new FileInputStream("resources/config.properties"));
 			
 
 			String url = props.getProperty("url");

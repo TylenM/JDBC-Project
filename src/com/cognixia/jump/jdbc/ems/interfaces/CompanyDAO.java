@@ -26,5 +26,5 @@ public interface CompanyDAO {
 	public boolean deleteCompanyById(int id);
 	
 	public List<Department> allDepartmentsInCompany(Company company);
-	public List<Employee> allEmployeesInCompany(Company company);
+	public List<Employee> allEmployeesInCompanyWithAddressOutput(Company company);
 }
