@@ -16,13 +16,11 @@ public class ConnectionManager {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("Registered Driver.");
 			
 			Properties props = new Properties();
 			props.load(new FileInputStream("resources/config.properties"));
 			
 			connection = DriverManager.getConnection(props.getProperty("url"), props.getProperty("username"), props.getProperty("password"));
-			System.out.println("Connection Established");
 		
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
