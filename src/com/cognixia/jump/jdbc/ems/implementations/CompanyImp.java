@@ -116,10 +116,18 @@ public class CompanyImp implements CompanyDAO {
 
 	@Override
 	public boolean deleteCompany(Company comp) {
-		try (PreparedStatement pstmt = conn.prepareStatement("DELETE FROM company WHERE company_id = ?")) {
-			pstmt.setInt(1, comp.getId());
-			int count = pstmt.executeUpdate();
+		try (PreparedStatement pstmtDeleteCompany = conn.prepareStatement("DELETE FROM company WHERE company_id = ?");
+				PreparedStatement pstmtDeleteDepts = conn.prepareStatement("DELETE FROM department WHERE company_id = ?");
+						PreparedStatement pstmtDeleteEmployees = conn.prepareStatement("DELETE FROM employee WHERE company_id = ?");) {
+			pstmtDeleteCompany.setInt(1, comp.getId());
+			pstmtDeleteDepts.setInt(1, comp.getId());
+			pstmtDeleteEmployees.setInt(1, comp.getId());
+			int count = pstmtDeleteCompany.executeUpdate();
 			if (count > 0) {
+				int countOfDeletedDept = pstmtDeleteDepts.executeUpdate();
+				int countOfDeletedEmployees = pstmtDeleteEmployees.executeUpdate();
+				System.out.println("you have deleted " + countOfDeletedDept + " number of departments.");
+				System.out.println("you have deleted " + countOfDeletedEmployees + " number of employees.");
 				return true;
 			}
 		} catch (SQLException e) {
