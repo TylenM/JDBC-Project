@@ -6,11 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="C:/Users/dimaino/Documents/Cognixia JUMP/Jar/mysql-connector-java-8.0.21.jar"/>
-=======
->>>>>>> liaBranch
+	<classpathentry kind="lib" path="/Users/millert/Documents/JARs/mysql-connector-java-8.0.21.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/lia_m/Documents/CognixiaJUMP/jarFiles/mysql-connector-java-8.0.21 (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
