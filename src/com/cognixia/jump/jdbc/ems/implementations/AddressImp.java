@@ -155,11 +155,11 @@ public class AddressImp implements AddressDAO{
 	@Override
 	public boolean addAddress(Address address) {
 		
-		try(PreparedStatement pstmt = conn.prepareStatement("insert into address values(?,?,?)")) {
+		try(PreparedStatement pstmt = conn.prepareStatement("insert into address values(null,?,?)")) {
 			
-			pstmt.setInt(1, address.getId());
-			pstmt.setString(2, address.getAddress());
-			pstmt.setString(3, address.getState());
+			//pstmt.setInt(1, address.getId());
+			pstmt.setString(1, address.getAddress());
+			pstmt.setString(2, address.getState());
 			
 			int count = pstmt.executeUpdate();
 			
@@ -220,4 +220,5 @@ public class AddressImp implements AddressDAO{
 	public void closeConnection() throws SQLException {
 		conn.close();
 	}
+	
 }

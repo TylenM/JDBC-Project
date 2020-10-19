@@ -7,7 +7,6 @@ import com.cognixia.jump.jdbc.exceptions.AddressNotFoundException;
 
 public interface AddressDAO {
 
-	
 	public List<Address> getAllAddresses();
 	
 	public Address getAddressById(int id);
@@ -21,6 +20,5 @@ public interface AddressDAO {
 	public boolean deleteAddress(int id);
 	
 	public boolean updateAddress(Address address);
-
 
 }
