@@ -11,5 +11,4 @@ bin/*
 *.zip
 *.tar.gz
 *.rar
-
 resources/config.properties
