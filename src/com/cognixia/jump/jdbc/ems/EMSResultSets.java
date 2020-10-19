@@ -23,7 +23,7 @@ public class EMSResultSets {
 			  ResultSet rs4 = stmt4.executeQuery("select * from company");){
 
 			
-			System.out.println("\n\nEmployees");
+			System.out.println("\n\nEmployee");
 			System.out.println("------------------------");
 			
 			while(rs.next()) {
@@ -38,12 +38,12 @@ public class EMSResultSets {
 				int address_id = rs.getInt("address_id");
 				int company_id = rs.getInt("company_id");
 				
-				System.out.println("ID: " + employee_id + " || Name: " + employee_name + " || Date of Birth: " + dob + " || Email: " + email + " || Phone: " + phone + " || Phone: " + salary + " || Department ID: " + department_id + " || Address ID: " + address_id + " || Company ID: " + company_id);
+				System.out.println("ID: " + employee_id + " || Name: " + employee_name + " || Date of Birth: " + dob + " || Email: " + email + " || Phone: " + phone + " || Salary: " + salary + " || Department ID: " + department_id + " || Address ID: " + address_id + " || Company ID: " + company_id);
 				
 			}
 			rs.close();
 			
-			System.out.println("\n\nDepartments");
+			System.out.println("\n\nDepartment");
 			System.out.println("------------------------");
 			while(rs2.next()) {
 				
