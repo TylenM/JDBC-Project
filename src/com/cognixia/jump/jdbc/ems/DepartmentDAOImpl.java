@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cognixia.jump.jdbc.ems.ConnManagerWithProps;
+import com.cognixia.jump.jdbc.ems.sqlconnection.ConnectToSQL;
 
 public class DepartmentDAOImpl implements DepartmentDAO {
 	
-	private Connection conn = ConnManagerWithProps.getConnection();
+	private Connection conn = ConnectToSQL.getConnection();
 
 	@Override
 	public List<Department> getAllDepartments() {
@@ -48,7 +48,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		ResultSet rs = null;
 		
-		try(PreparedStatement pstmt = conn.prepareStatement("select * from department where dept_id = ?")) {
+		try(PreparedStatement pstmt = conn.prepareStatement("select * from department where department_id = ?")) {
 			
 			pstmt.setInt(1, deptId);
 			
@@ -80,7 +80,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	}
 
 	@Override
-	public Department getDepartmentByName(String deptName) throws DepartmentNotFoundException {
+	public Department getDepartmentByName(String deptName){
 		ResultSet rs = null;
 
 		try (PreparedStatement pstmt = conn.prepareStatement("select * from department where dept_name = ?")) {
@@ -110,8 +110,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 				e.printStackTrace();
 			}
 		}
+		return null;
 		
-		throw new DepartmentNotFoundException(deptName);
 	}
 
 	@Override

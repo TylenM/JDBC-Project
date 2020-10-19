@@ -8,7 +8,7 @@ public interface DepartmentDAO {
 	
 	public Department getDepartmentById(int deptId);
 	
-	public Department getDepartmentByName(String deptName) throws DepartmentNotFoundException;
+	public Department getDepartmentByName(String deptName);
 	
 	public boolean addDepartment(Department dept);
 	
