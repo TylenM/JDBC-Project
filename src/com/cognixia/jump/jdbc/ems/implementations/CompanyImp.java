@@ -101,6 +101,16 @@ public class CompanyImp implements CompanyDAO {
 
 	@Override
 	public boolean updateCompany(Company comp) {
+		try (PreparedStatement pstmt = conn.prepareStatement("UPDATE company SET name = ? WHERE company_id = ?")) {
+			pstmt.setString(1, comp.getName());
+			pstmt.setInt(2, comp.getId());
+			int count = pstmt.executeUpdate();
+			if (count > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
