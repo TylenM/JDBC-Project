@@ -56,7 +56,7 @@ public class CompanyRunner {
 				name
 		);
 				
-		cDAO.addCompany(comp);
+		cDAO.updateCompany(comp);
 		companyUpdate(comp);
 	}
 	
