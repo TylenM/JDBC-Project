@@ -22,25 +22,25 @@ class CompanyImpTest {
 	}
 	@Test
 	void testFindAll() {
-		assertNotNull(compImp.findall());
+		assertNotNull(compImp.getAllCompanies());
 	}
 	@Test 
 	void findByName() {
-		Company c = compImp.findOneByName(addedString);
+		Company c = compImp.getCompanyByName(addedString);
 		System.out.println("c" + c);
 		assertEquals(c.getName(), addedString);
 	}
 	@Test
 	void testEditCompany() {
-		Company editToThis = compImp.findOneByName(addedString);
+		Company editToThis = compImp.getCompanyByName(addedString);
 		editToThis.setName(editName);
 		boolean b = compImp.updateCompany(editToThis);
 		assertTrue(b);
 	}
 	@Test
 	void testDeleteCompany() {
-		Company lastestCompany = compImp.findOneByName(editName);
-		boolean b = compImp.deleteCompany(lastestCompany);
+		Company lastestCompany = compImp.getCompanyByName(editName);
+		boolean b = compImp.deleteCompany(lastestCompany.getCompany_id());
 		assertTrue(b);
 	}
 	

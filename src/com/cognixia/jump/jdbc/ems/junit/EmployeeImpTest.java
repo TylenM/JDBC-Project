@@ -21,7 +21,7 @@ class EmployeeImpTest {
 	
 	@Test
 	void addEmployee() {
-		Employee emp = new Employee(0, "FirstName1", "LastName1", Date.valueOf("2000-02-03"), "test@gmail.com", "555-555-5555", 50000d, 1, 1, 1);
+		Employee emp = new Employee(0, "FirstName1", "LastName1", Date.valueOf("2000-02-03"), "test@gmail.com", "555-555-5555", 50000d, 1, 1);
 		assertEquals(true, eDAO.addEmployee(emp));
 	}
 	
