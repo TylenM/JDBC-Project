@@ -217,7 +217,7 @@ public class Main {
 						AddressRunner.addressListEmployees(addId);								
 					}
 				}
-			} else if(newStr.equalsIgnoreCase("F")) {
+			} else if(newStr.equalsIgnoreCase("E")) {
 				mainMenu();
 			}
 		} else {

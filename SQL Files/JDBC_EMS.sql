@@ -22,6 +22,7 @@ CREATE TABLE department(
     phone_extension varchar(3),
     company_id int NOT NULL,
     FOREIGN KEY (company_id) references company(company_id),
+    
     PRIMARY KEY(department_id),
     UNIQUE KEY comp_dept (name, company_id)
 );
@@ -36,10 +37,8 @@ CREATE TABLE employee(
     salary double,
     department_id int NOT NULL,
     address_id int NOT NULL,
-    company_id int NOT NULL,
     FOREIGN KEY (department_id) references department(department_id),
     FOREIGN KEY (address_id) references address(address_id),
-    FOREIGN KEY (company_id) references company(company_id),
     PRIMARY KEY(employee_id)
 );
 
@@ -81,8 +80,24 @@ INSERT INTO department(department_id, name, budget, phone_extension, company_id)
 INSERT INTO department(department_id, name, budget, phone_extension, company_id) VALUES(null, 'Marketing', 6100000, '513', 5);
 INSERT INTO department(department_id, name, budget, phone_extension, company_id) VALUES(null, 'Sales', 1200000, '514', 5);
 
-INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Kristina', 'Perez', '2017-06-15', 'w94j0rqc0h7@temporary-mail.net', '602-334-8166', 75000, 1, 1, 1);
-INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Russell', 'Salyers', '1956-07-14', 'uqt7p9x5jh@temporary-mail.net', '480-736-2980', 65000, 1, 2, 2);
-INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Frank', 'Pruitt', '1987-01-09', '3g7sc3azwhw@temporary-mail.net', '605-301-0440', 60000, 1, 3, 3);
-INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Harry', 'Pina', '1980-05-15', 'onaurc68cvl@temporary-mail.net', '713-203-2900', 120000, 1, 4, 4);
-INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, 'Linda', 'Taylor', '1987-12-13', 'l79509j8ibp@temporary-mail.net', '417-246-6563', 35000, 1, 5, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'Kristina', 'Perez', '2017-06-15', 'w94j0rqc0h7@temporary-mail.net', '602-334-8166', 75000, 1, 1);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'Russell', 'Salyers', '1956-07-14', 'uqt7p9x5jh@temporary-mail.net', '480-736-2980', 65000, 1, 2);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'Frank', 'Pruitt', '1987-01-09', '3g7sc3azwhw@temporary-mail.net', '605-301-0440', 60000, 1, 3);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'Harry', 'Pina', '1980-05-15', 'onaurc68cvl@temporary-mail.net', '713-203-2900', 120000, 1, 4);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'Linda', 'Taylor', '1987-12-13', 'l79509j8ibp@temporary-mail.net', '417-246-6563', 35000, 1, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'p@il.ne', '417-246-6564', 30000, 1, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'aaaaaa', 'T', '1987-12-13', 'p@gl.ne', '417-146-6564', 300000, 1, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'pp@il.ne', '117-246-6564', 344444, 1, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'qq11@il.ne', '200-146-1561', 30040, 1, 5);
+
+
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'qtqr11@il.ne', '288-146-1561', 30040, 2, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'qtqe11@il.ne', '278-146-1561', 30040, 2, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'qtwq11@il.ne', '298-146-1561', 30040, 4, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'qtqq11@il.ne', '218-146-1561', 30040, 3, 5);
+
+
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'qqtqr11@il.ne', '288-246-1561', 30040, 6, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'wqtqe11@il.ne', '278-126-1561', 30040, 7, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'eqtwq11@il.ne', '298-142-1561', 30040, 8, 5);
+INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, 'a', 'T', '1987-12-13', 'rqtqq11@il.ne', '218-226-1561', 30040, 9, 5);
