@@ -256,7 +256,20 @@ public class Main {
 					}
 				}
 			} else if(newStr.equalsIgnoreCase("E")) {
-//				CompanyRunner.companyListEmployees();
+				List<Company> compList = cDAO.getAllCompanies();
+				if(compList.size() == 0) {
+					System.out.println("INFO: There are no companies to view.");
+					Company.tableView(compList);
+					crudOption("company");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the company to view or edit");
+					int compId = InputValidation.validInterger();
+					Company comp = cDAO.getCompanyById(compId);
+					if(comp != null) {
+						CompanyRunner.companyListEmployees(compId);									
+					}
+				}
 			} else if(newStr.equalsIgnoreCase("F")) {
 				mainMenu();
 			}

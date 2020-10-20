@@ -96,6 +96,7 @@ public class CompanyRunner {
 	}
 	
 	public static void companyListEmployees(int id) {
-		
+		Employee.tableView(eDAO.getAllEmployeesInCompWithId(id));
+		Main.crudOption("company");
 	}
 }

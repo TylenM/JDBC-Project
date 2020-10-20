@@ -267,7 +267,7 @@ public class EmployeeImp implements EmployeeDAO {
 		List<Employee> empList = new ArrayList<>();
 		ResultSet rs = null;
 		
-		try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee where company_id = ?");) {
+		try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee LEFT JOIN department on employee.department_id = department.department_id WHERE company_id = ?");) {
 			
 			pstmt.setInt(1, id);
 			
