@@ -33,8 +33,7 @@ public class EmployeeImp implements EmployeeDAO {
 						rs.getString("phone"), 
 						rs.getDouble("salary"), 
 						rs.getInt("department_id"), 
-						rs.getInt("address_id"), 
-						rs.getInt("company_id")
+						rs.getInt("address_id")
 				);
 				empList.add(emp);
 			}
@@ -65,8 +64,7 @@ public class EmployeeImp implements EmployeeDAO {
 						rs.getString("phone"),
 						rs.getDouble("salary"),
 						rs.getInt("department_id"),
-						rs.getInt("address_id"),
-						rs.getInt("company_id")
+						rs.getInt("address_id")
 				); 
 				empList.add(emp);
 			}
@@ -101,8 +99,7 @@ public class EmployeeImp implements EmployeeDAO {
 						rs.getString("phone"),
 						rs.getDouble("salary"),
 						rs.getInt("department_id"),
-						rs.getInt("address_id"),
-						rs.getInt("company_id")
+						rs.getInt("address_id")
 				); 
 				return emp;
 			}
@@ -120,7 +117,7 @@ public class EmployeeImp implements EmployeeDAO {
 
 	@Override
 	public boolean addEmployee(Employee emp) {
-		try(PreparedStatement pstmt = conn.prepareStatement("INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id, company_id) VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+		try(PreparedStatement pstmt = conn.prepareStatement("INSERT INTO employee(employee_id, first_name, last_name, date_of_birth, email, phone, salary, department_id, address_id) VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 			
 			pstmt.setString(1, emp.getFirst_name());
 			pstmt.setString(2, emp.getLast_name());
@@ -130,7 +127,6 @@ public class EmployeeImp implements EmployeeDAO {
 			pstmt.setDouble(6, emp.getSalary());
 			pstmt.setInt(7, emp.getDepartment_id());
 			pstmt.setInt(8, emp.getAddress_id());
-			pstmt.setInt(9, emp.getCompany_id());
 			
 			if(pstmt.executeUpdate() > 0) {
 				return true;
@@ -161,7 +157,7 @@ public class EmployeeImp implements EmployeeDAO {
 
 	@Override
 	public boolean updateEmployee(Employee emp) {
-		try(PreparedStatement pstmt = conn.prepareStatement("update employee set first_name = ?, last_name = ?, date_of_birth = ?, email = ?, phone = ?, salary = ?, department_id = ?, address_id = ?, company_id = ? where employee_id = ?")){
+		try(PreparedStatement pstmt = conn.prepareStatement("update employee set first_name = ?, last_name = ?, date_of_birth = ?, email = ?, phone = ?, salary = ?, department_id = ?, address_id = ? where employee_id = ?")){
 			
 			pstmt.setString(1, emp.getFirst_name());
 			pstmt.setString(2, emp.getLast_name());
@@ -171,8 +167,7 @@ public class EmployeeImp implements EmployeeDAO {
 			pstmt.setDouble(6, emp.getSalary());
 			pstmt.setInt(7, emp.getDepartment_id());
 			pstmt.setInt(8, emp.getAddress_id());
-			pstmt.setInt(9, emp.getCompany_id());
-			pstmt.setInt(10, emp.getEmployee_id());
+			pstmt.setInt(9, emp.getEmployee_id());
 			
 			int count = pstmt.executeUpdate();
 			
@@ -233,6 +228,102 @@ public class EmployeeImp implements EmployeeDAO {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public List<Employee> getAllEmployeesInDeptWithId(int id) {
+		List<Employee> empList = new ArrayList<>();
+		ResultSet rs = null;
+		
+		try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee where department_id = ?");) {
+			
+			pstmt.setInt(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Employee emp = new Employee(
+						rs.getInt("employee_id"), 
+						rs.getString("first_name"), 
+						rs.getString("last_name"), 
+						rs.getDate("date_of_birth"), 
+						rs.getString("email"), 
+						rs.getString("phone"), 
+						rs.getDouble("salary"), 
+						rs.getInt("department_id"), 
+						rs.getInt("address_id")
+				);
+				empList.add(emp);
+			}
+			
+		} catch(Exception e) {
+			System.out.println("There are no employees in the department.");
+		}
+		return empList;
+	}
+
+	@Override
+	public List<Employee> getAllEmployeesInCompWithId(int id) {
+		List<Employee> empList = new ArrayList<>();
+		ResultSet rs = null;
+		
+		try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee where company_id = ?");) {
+			
+			pstmt.setInt(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Employee emp = new Employee(
+						rs.getInt("employee_id"), 
+						rs.getString("first_name"), 
+						rs.getString("last_name"), 
+						rs.getDate("date_of_birth"), 
+						rs.getString("email"), 
+						rs.getString("phone"), 
+						rs.getDouble("salary"), 
+						rs.getInt("department_id"), 
+						rs.getInt("address_id")
+				);
+				empList.add(emp);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return empList;
+	}
+
+	@Override
+	public List<Employee> getAllAddressesForEmployee(int id) {
+		List<Employee> empList = new ArrayList<>();
+		ResultSet rs = null;
+		
+		try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee where address_id = ?");) {
+			
+			pstmt.setInt(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Employee emp = new Employee(
+						rs.getInt("employee_id"), 
+						rs.getString("first_name"), 
+						rs.getString("last_name"), 
+						rs.getDate("date_of_birth"), 
+						rs.getString("email"), 
+						rs.getString("phone"), 
+						rs.getDouble("salary"), 
+						rs.getInt("department_id"), 
+						rs.getInt("address_id")
+				);
+				empList.add(emp);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return empList;
 	}
 	
 }

@@ -8,22 +8,12 @@ import com.cognixia.jump.jdbc.ems.models.Employee;
 
 public interface CompanyDAO {
 
-	/**
-	 * find all 
-	 * find one by name 
-	 * find one by id
-	 * add one
-	 * update name
-	 * delete all cascading 
-	 */
-
-	public List<Company> findall();
-	public Company findOneById(int id);
-	public Company findOneByName(String name);
+	public List<Company> getAllCompanies();
+	public Company getCompanyById(int id);
+	public Company getCompanyByName(String name);
 	public boolean addCompany(Company comp);
 	public boolean updateCompany(Company comp);
-	public boolean deleteCompany(Company comp);
-	public boolean deleteCompanyById(int id);
+	public boolean deleteCompany(int id);
 	
 	public List<Department> allDepartmentsInCompany(Company company);
 	public List<Employee> allEmployeesInCompanyWithAddressOutput(Company company);

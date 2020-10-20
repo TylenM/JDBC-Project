@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class CompanyImp implements CompanyDAO {
 	private Connection conn = ConnectToSQL.getConnection();
 
 	@Override
-	public List<Company> findall() {
+	public List<Company> getAllCompanies() {
 		List<Company> companies = new ArrayList<>();
 		try (PreparedStatement pstmt = 
 				conn.prepareStatement("SELECT * FROM company ORDER BY company_id");
@@ -35,7 +36,7 @@ public class CompanyImp implements CompanyDAO {
 	}
 
 	@Override
-	public Company findOneById(int id) {
+	public Company getCompanyById(int id) {
 		ResultSet rs = null;
 		try (PreparedStatement pstmt = 
 				conn.prepareStatement("SELECT * FROM company WHERE company_id = ?")) {
@@ -60,7 +61,7 @@ public class CompanyImp implements CompanyDAO {
 	}
 
 	@Override
-	public Company findOneByName(String name) {
+	public Company getCompanyByName(String name) {
 		ResultSet rs = null;
 		try (PreparedStatement pstmt = 
 				conn.prepareStatement("SELECT * FROM company WHERE name = ?")) {
@@ -94,7 +95,7 @@ public class CompanyImp implements CompanyDAO {
 				return true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Company name already exists!");
 		}
 		return false;
 	}
@@ -103,7 +104,7 @@ public class CompanyImp implements CompanyDAO {
 	public boolean updateCompany(Company comp) {
 		try (PreparedStatement pstmt = conn.prepareStatement("UPDATE company SET name = ? WHERE company_id = ?")) {
 			pstmt.setString(1, comp.getName());
-			pstmt.setInt(2, comp.getId());
+			pstmt.setInt(2, comp.getCompany_id());
 			int count = pstmt.executeUpdate();
 			if (count > 0) {
 				return true;
@@ -115,33 +116,19 @@ public class CompanyImp implements CompanyDAO {
 	}
 
 	@Override
-	public boolean deleteCompany(Company comp) {
-		try (PreparedStatement pstmtDeleteCompany = conn.prepareStatement("DELETE FROM company WHERE company_id = ?");
-				PreparedStatement pstmtDeleteDepts = conn.prepareStatement("DELETE FROM department WHERE company_id = ?");
-						PreparedStatement pstmtDeleteEmployees = conn.prepareStatement("DELETE FROM employee WHERE company_id = ?");) {
-			pstmtDeleteCompany.setInt(1, comp.getId());
-			pstmtDeleteDepts.setInt(1, comp.getId());
-			pstmtDeleteEmployees.setInt(1, comp.getId());
-			int count = pstmtDeleteCompany.executeUpdate();
-			if (count > 0) {
-				int countOfDeletedDept = pstmtDeleteDepts.executeUpdate();
-				int countOfDeletedEmployees = pstmtDeleteEmployees.executeUpdate();
-				System.out.println("you have deleted " + countOfDeletedDept + " number of departments.");
-				System.out.println("you have deleted " + countOfDeletedEmployees + " number of employees.");
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	public boolean deleteCompanyById(int id) {
-		try (PreparedStatement pstmt = conn.prepareStatement("DELETE FROM company WHERE company_id = ?")) {
-			pstmt.setInt(1, id);
-			int count = pstmt.executeUpdate();
-			if (count > 0) {
+	public boolean deleteCompany(int id) {
+		try (PreparedStatement pstmtComp = conn.prepareStatement("DELETE FROM company WHERE company_id = ?");
+			 PreparedStatement pstmtDept = conn.prepareStatement("DELETE FROM department WHERE company_id = ?");
+			 PreparedStatement pstmtEmp = conn.prepareStatement("DELETE FROM employee WHERE department_id IN (SELECT department_id FROM department WHERE company_id = ?);");) {
+			
+			pstmtComp.setInt(1, id);
+			pstmtDept.setInt(1, id);
+			pstmtEmp.setInt(1, id);
+			
+			if(getCompanyById(id) != null) {
+				int countEmp = pstmtEmp.executeUpdate();
+				int countDept = pstmtDept.executeUpdate();
+				int count = pstmtComp.executeUpdate();
 				return true;
 			}
 		} catch (SQLException e) {
@@ -152,48 +139,50 @@ public class CompanyImp implements CompanyDAO {
 
 	@Override
 	public List<Department> allDepartmentsInCompany(Company company) {
-		List<Department> departments = new ArrayList<>();
-		try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM department WHERE company_id = ?");
-				ResultSet rs = pstmt.executeQuery();) {
-			while (rs.next()) {
-				int company_id = rs.getInt("company_id");
-				int id = rs.getInt("department_id");
-				double budget = rs.getDouble("budget");
-				String name = rs.getString("name");
-				String phone_extension = rs.getString("phone_extension");
-				Department department = new Department(id, company_id, name, phone_extension, budget);
-				departments.add(department);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println(e.getMessage());
-		}
-		return departments;
+//		List<Department> departments = new ArrayList<>();
+//		try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM department WHERE company_id = ?");
+//				ResultSet rs = pstmt.executeQuery();) {
+//			while (rs.next()) {
+//				int company_id = rs.getInt("company_id");
+//				int id = rs.getInt("department_id");
+//				double budget = rs.getDouble("budget");
+//				String name = rs.getString("name");
+//				String phone_extension = rs.getString("phone_extension");
+//				Department department = new Department(id, company_id, name, phone_extension, budget);
+//				departments.add(department);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.err.println(e.getMessage());
+//		}
+//		return departments;
+		return null;
 	}
 
 	@Override
 	public List<Employee> allEmployeesInCompanyWithAddressOutput(Company company) {
-		List<Employee> employees = new ArrayList<>();
-		try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee "
-				+ "LEFT JOIN address ON employee.address_id = address.address_id WHERE company_id = ?");
-				ResultSet rs = pstmt.executeQuery();) {
-			while (rs.next()) {
-				int id = rs.getInt("employee_id");
-				double salary = rs.getDouble("salary");
-				String name = rs.getString("first_name") + " " + rs.getString("last_name");
-				String date_of_birth = rs.getString("date_of_birth");
-				String email = rs.getString("email");
-				String phone = rs.getString("phone");
-				String address = rs.getString("address");
-				System.out.println(name  + " : " + address);
-				Employee employee = new Employee();
-				employees.add(employee);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println(e.getMessage());
-		}
-		return employees;
+//		List<Employee> employees = new ArrayList<>();
+//		try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee "
+//				+ "LEFT JOIN address ON employee.address_id = address.address_id WHERE company_id = ?");
+//				ResultSet rs = pstmt.executeQuery();) {
+//			while (rs.next()) {
+//				int id = rs.getInt("employee_id");
+//				double salary = rs.getDouble("salary");
+//				String name = rs.getString("first_name") + " " + rs.getString("last_name");
+//				String date_of_birth = rs.getString("date_of_birth");
+//				String email = rs.getString("email");
+//				String phone = rs.getString("phone");
+//				String address = rs.getString("address");
+//				System.out.println(name  + " : " + address);
+//				Employee employee = new Employee();
+//				employees.add(employee);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.err.println(e.getMessage());
+//		}
+//		return employees;
+		return null;
 	}
 
 }

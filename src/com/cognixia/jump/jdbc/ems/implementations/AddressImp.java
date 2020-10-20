@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cognixia.jump.jdbc.ems.Address;
+
 import com.cognixia.jump.jdbc.ems.ConnectionManager;
 import com.cognixia.jump.jdbc.ems.interfaces.AddressDAO;
+import com.cognixia.jump.jdbc.ems.models.Address;
+import com.cognixia.jump.jdbc.ems.models.Department;
 import com.cognixia.jump.jdbc.exceptions.AddressNotFoundException;
 
 public class AddressImp implements AddressDAO{
@@ -178,11 +180,14 @@ public class AddressImp implements AddressDAO{
 	@Override
 	public boolean deleteAddress(int id) {
 		
-		try(PreparedStatement pstmt = conn.prepareStatement("delete address where address_id = ?")) {
+		try(PreparedStatement pstmtAdd = conn.prepareStatement("DELETE FROM address WHERE address_id = ?");
+			PreparedStatement pstmtEmp = conn.prepareStatement("DELETE FROM employee WHERE address_id = ?");) {
 			
-			pstmt.setInt(1, id);
+			pstmtEmp.setInt(1, id);
+			pstmtAdd.setInt(1, id);
 			
-			int count = pstmt.executeUpdate();
+			pstmtEmp.executeUpdate();
+			int count = pstmtAdd.executeUpdate();
 			
 			if(count > 0) {
 				return true;
@@ -202,7 +207,7 @@ public class AddressImp implements AddressDAO{
 			
 			pstmt.setString(1, address.getAddress());
 			pstmt.setString(2, address.getState());
-			pstmt.setInt(2, address.getId());
+			pstmt.setInt(2, address.getAddress_id());
 			
 			int count = pstmt.executeUpdate();
 			

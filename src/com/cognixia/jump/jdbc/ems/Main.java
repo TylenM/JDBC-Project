@@ -2,18 +2,35 @@ package com.cognixia.jump.jdbc.ems;
 
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import com.cognixia.jump.jdbc.ems.exceptions.PhoneNumberException;
+import com.cognixia.jump.jdbc.ems.implementations.AddressImp;
+import com.cognixia.jump.jdbc.ems.implementations.CompanyImp;
+import com.cognixia.jump.jdbc.ems.implementations.DepartmentImp;
 import com.cognixia.jump.jdbc.ems.implementations.EmployeeImp;
+import com.cognixia.jump.jdbc.ems.interfaces.AddressDAO;
+import com.cognixia.jump.jdbc.ems.interfaces.CompanyDAO;
+import com.cognixia.jump.jdbc.ems.interfaces.DepartmentDAO;
 import com.cognixia.jump.jdbc.ems.interfaces.EmployeeDAO;
+import com.cognixia.jump.jdbc.ems.models.Address;
+import com.cognixia.jump.jdbc.ems.models.Company;
+import com.cognixia.jump.jdbc.ems.models.Department;
 import com.cognixia.jump.jdbc.ems.models.Employee;
+import com.cognixia.jump.jdbc.ems.runners.AddressRunner;
+import com.cognixia.jump.jdbc.ems.runners.CompanyRunner;
+import com.cognixia.jump.jdbc.ems.runners.DepartmentRunner;
+import com.cognixia.jump.jdbc.ems.runners.EmployeeRunner;
 
 public class Main {
 	
 	private static Scanner scan = new Scanner(System.in);
 	
 	private static EmployeeDAO eDAO = new EmployeeImp();
+	private static DepartmentDAO dDAO = new DepartmentImp();
+	private static AddressDAO aDAO = new AddressImp();
+	private static CompanyDAO cDAO = new CompanyImp();
 
 	public static void main(String[] args) {
 		
@@ -37,21 +54,22 @@ public class Main {
 		}
 		
 		if(newStr.equalsIgnoreCase("A")) {
-			Employee.tableView();
+			Employee.tableView(eDAO.getAllEmployees());
 			crudOption("employee");
 		} else if(newStr.equalsIgnoreCase("B")) {
-			System.out.println("Viewing Departments");
+			Department.tableView(dDAO.getAllDepartments());
 			crudOption("department");
 		} else if(newStr.equalsIgnoreCase("C")) {
-			System.out.println("Viewing Companies");
+			Company.tableView(cDAO.getAllCompanies());
 			crudOption("company");
 		} else if(newStr.equalsIgnoreCase("D")) {
-			System.out.println("Viewing Addresses");
+			Address.tableView(aDAO.getAllAddresses());
 			crudOption("address");
 		} else if(newStr.equalsIgnoreCase("E")) {
 			System.out.println("THANK YOU FOR USING THIS APPLICATION!!!");
 			System.exit(0);
 		}
+		return;
 	}
 	
 	public static void crudOption(String option) {
@@ -68,7 +86,7 @@ public class Main {
 			System.out.println("E - List all the employees in the " + option + ".");
 			System.out.println("F - Return to main menu.");
 		} else if(option.equals("address")) {
-			System.out.println("D - List all the employees this " + option + ".");
+			System.out.println("D - List all the employees with this " + option + ".");
 			System.out.println("E - Return to main menu.");
 		} else {
 			System.out.println("D - Return to main menu.");
@@ -97,9 +115,10 @@ public class Main {
 		
 		if(option.equals("employee")) {
 			if(newStr.equalsIgnoreCase("A")) {
-				if(eDAO.getAllEmployees().size() == 0) {
+				List<Employee> empList = eDAO.getAllEmployees();
+				if(empList.size() == 0) {
 					System.out.println("INFO: There are no employees to view.");
-					Employee.tableView();
+					Employee.tableView(empList);
 					crudOption("employee");
 				}
 				while(true) {
@@ -107,281 +126,140 @@ public class Main {
 					int empId = InputValidation.validInterger();
 					Employee emp = eDAO.getEmployeeById(empId);
 					if(emp != null) {
-						employeeUpdate(emp);											
+						EmployeeRunner.employeeUpdate(emp);											
 					}
 				}
 			} else if(newStr.equalsIgnoreCase("B")) {
-				// check to make sure department and company and address exits.
-				employeeAdd();
+				if(cDAO.getAllCompanies() == null) {
+					System.out.println("A company needs to exist to add an employee.");
+				} else if(dDAO.getAllDepartments() == null) {
+					System.out.println("A department needs to exist to add an employee.");
+				} else if(aDAO.getAllAddresses() == null) {
+					System.out.println("An address needs to exist to add an employee ");
+				} else {
+					EmployeeRunner.employeeAdd();					
+				}
 			} else if(newStr.equalsIgnoreCase("C")) {
-				// check to make sure employee exists.
-				employeeRemove();
+				EmployeeRunner.employeeRemove();
 			} else if(newStr.equalsIgnoreCase("D")) {
 				mainMenu();
 			}
 		} else if(option.equals("department")) {
 			if(newStr.equalsIgnoreCase("A")) {
-				departmentUpdate();
+				List<Department> deptList = dDAO.getAllDepartments();
+				if(deptList.size() == 0) {
+					System.out.println("INFO: There are no departments to view.");
+					Department.tableView(deptList);
+					crudOption("department");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the department to view or edit");
+					int deptId = InputValidation.validInterger();
+					Department dept = dDAO.getDepartmentById(deptId);
+					if(dept != null) {
+						DepartmentRunner.departmentUpdate(dept);										
+					}
+				}
 			} else if(newStr.equalsIgnoreCase("B")) {
-				departmentAdd();
+				DepartmentRunner.departmentAdd();
 			} else if(newStr.equalsIgnoreCase("C")) {
-				departmentRemove();
+				DepartmentRunner.departmentRemove();
 			} else if(newStr.equalsIgnoreCase("D")) {
-				departmentListEmployees();
-			} else if(newStr.equalsIgnoreCase("F")) {
+				List<Department> deptList = dDAO.getAllDepartments();
+				if(deptList.size() == 0) {
+					System.out.println("INFO: There are no departments to view.");
+					Department.tableView(deptList);
+					crudOption("department");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the department to view or edit");
+					int deptId = InputValidation.validInterger();
+					Department dept = dDAO.getDepartmentById(deptId);
+					if(dept != null) {
+						DepartmentRunner.departmentListEmployees(deptId);										
+					}
+				}
+			} else if(newStr.equalsIgnoreCase("E")) {
 				mainMenu();
 			}
 		} else if(option.equals("address")) {
 			if(newStr.equalsIgnoreCase("A")) {
-				addressUpdate();
+				List<Address> addList = aDAO.getAllAddresses();
+				if(addList.size() == 0) {
+					System.out.println("INFO: There are no addresses to view.");
+					Address.tableView(addList);
+					crudOption("address");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the address to view or edit");
+					int addId = InputValidation.validInterger();
+					Address add = aDAO.getAddressById(addId);
+					if(add != null) {
+						AddressRunner.addressUpdate(add);									
+					}
+				}
 			} else if(newStr.equalsIgnoreCase("B")) {
-				addressAdd();
+				AddressRunner.addressAdd();
 			} else if(newStr.equalsIgnoreCase("C")) {
-				addressRemove();
+				AddressRunner.addressRemove();
 			} else if(newStr.equalsIgnoreCase("D")) {
-				addressListEmployees();
+				List<Address> addList = aDAO.getAllAddresses();
+				if(addList.size() == 0) {
+					System.out.println("INFO: There are no address to view.");
+					Address.tableView(addList);
+					crudOption("address");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the address to view or edit");
+					int addId = InputValidation.validInterger();
+					Address add = aDAO.getAddressById(addId);
+					if(add != null) {
+						AddressRunner.addressListEmployees(addId);								
+					}
+				}
 			} else if(newStr.equalsIgnoreCase("F")) {
 				mainMenu();
 			}
 		} else {
 			if(newStr.equalsIgnoreCase("A")) {
-				companyUpdate();
+				List<Company> compList = cDAO.getAllCompanies();
+				if(compList.size() == 0) {
+					System.out.println("INFO: There are no companies to view.");
+					Company.tableView(compList);
+					crudOption("company");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the company to view or edit");
+					int compId = InputValidation.validInterger();
+					Company comp = cDAO.getCompanyById(compId);
+					if(comp != null) {
+						CompanyRunner.companyUpdate(comp);								
+					}
+				}
 			} else if(newStr.equalsIgnoreCase("B")) {
-				companyAdd();
+				CompanyRunner.companyAdd();
 			} else if(newStr.equalsIgnoreCase("C")) {
-				companyRemove();
+				CompanyRunner.companyRemove();
 			} else if(newStr.equalsIgnoreCase("D")) {
-				companyListDepartments();
+				List<Company> compList = cDAO.getAllCompanies();
+				if(compList.size() == 0) {
+					System.out.println("INFO: There are no companies to view.");
+					Company.tableView(compList);
+					crudOption("company");
+				}
+				while(true) {
+					System.out.println("Enter in the id of the company to view or edit");
+					int compId = InputValidation.validInterger();
+					Company comp = cDAO.getCompanyById(compId);
+					if(comp != null) {
+						CompanyRunner.companyListDepartments(compId);									
+					}
+				}
 			} else if(newStr.equalsIgnoreCase("E")) {
-				companyListEmployees();
+//				CompanyRunner.companyListEmployees();
 			} else if(newStr.equalsIgnoreCase("F")) {
 				mainMenu();
 			}
 		}
-	}
-	
-	public static void employeeUpdate(Employee emp) {
-		Employee.tableViewSingleEmployee(emp);
-		
-		System.out.println("Pick an option (A, B, C, D, E, F, G, H, I, J, or K):");
-		System.out.println("------------------------");
-		System.out.println("A - Edit First Name.");
-		System.out.println("B - Edit Last Name.");
-		System.out.println("C - Edit Date of Birth.");
-		System.out.println("D - Edit Email.");
-		System.out.println("E - Edit Phone Number.");
-		System.out.println("F - Edit Salary.");
-		System.out.println("G - Edit Department.");
-		System.out.println("H - Edit Address.");
-		System.out.println("I - Edit Company.");
-		System.out.println("J - Return to Employee Table.");
-		System.out.println("K - Return to main menu.");
-		
-		String newStr = scan.nextLine();
-		
-		while(!(newStr.equalsIgnoreCase("A") || newStr.equalsIgnoreCase("B") || newStr.equalsIgnoreCase("C") || newStr.equalsIgnoreCase("D") || newStr.equalsIgnoreCase("E") || newStr.equalsIgnoreCase("F") || newStr.equalsIgnoreCase("G") || newStr.equalsIgnoreCase("H") || newStr.equalsIgnoreCase("I") || newStr.equalsIgnoreCase("J") || newStr.equalsIgnoreCase("K"))) {
-			System.out.println("You have entered in: " + newStr + "\nPlease enter in either A, B, C, D, E, F, G, H, I, J, or K:");
-			newStr = scan.nextLine();
-		}
-		
-		String firstName = emp.getFirst_name();
-		String lastName = emp.getLast_name();
-		String dateOfBirth = emp.getDate_of_birth().toString();
-		String email = emp.getEmail();
-		String phone = emp.getPhone();
-		double salary = emp.getSalary();
-		int deptId = emp.getDepartment_id();
-		int addressId = emp.getAddress_id();
-		int companyId = emp.getCompany_id();
-		
-		if(newStr.equalsIgnoreCase("A")) {
-			System.out.println("Enter a First Name: ");
-			firstName = scan.nextLine();
-		} else if(newStr.equalsIgnoreCase("B")) {
-			System.out.println("Enter a Last Name: ");
-			lastName = scan.nextLine();
-		} else if(newStr.equalsIgnoreCase("C")) {
-			System.out.println("Enter employees Date of Birth (yyyy-mm-dd): ");
-			dateOfBirth = InputValidation.isValidDate();		
-		} else if(newStr.equalsIgnoreCase("D")) {
-			email = InputValidation.isValidEmail();
-			while(eDAO.checkEmployeeEmailExists(email)) {
-				email = InputValidation.isValidEmail();
-			}
-		} else if(newStr.equalsIgnoreCase("E")) {
-			phone = "";
-			while(true) {
-				try {
-					System.out.println("Enter a phone number: ");
-					phone = InputValidation.isValidPhoneNumber();
-					while(eDAO.checkEmployeePhoneExists(phone)) {
-						System.out.println("This number is in the database already. Please enter a new number: ");
-						phone = InputValidation.isValidPhoneNumber();
-					}
-					break;
-				} catch (PhoneNumberException e) {
-					System.out.println(e.getMessage());
-				}
-			}
-		} else if(newStr.equalsIgnoreCase("F")) {
-			System.out.println("Enter employee's salary: ");
-			salary = InputValidation.validDouble();
-		} else if(newStr.equalsIgnoreCase("G")) {
-			System.out.println("Enter employee's department id: ");
-			deptId = InputValidation.validInterger();
-		} else if(newStr.equalsIgnoreCase("H")) {
-			System.out.println("Enter employee's address id: ");
-			addressId = InputValidation.validInterger();
-		} else if(newStr.equalsIgnoreCase("I")) {
-			System.out.println("Enter employee's company id: ");
-			companyId = InputValidation.validInterger();
-		} else if(newStr.equalsIgnoreCase("J")) {
-			Employee.tableView();
-			crudOption("employee");
-		} else if(newStr.equalsIgnoreCase("K")) {
-			mainMenu();
-		}
-		emp = new Employee(
-				emp.getEmployee_id(), 
-				firstName, 
-				lastName, 
-				Date.valueOf(dateOfBirth), 
-				email, 
-				phone, 
-				salary, 
-				deptId,
-				addressId, 
-				companyId
-		);
-		eDAO.updateEmployee(emp);
-		employeeUpdate(emp);
-	}
-	
-	public static void employeeAdd() {
-		Employee emp = null;
-		
-		System.out.println("Enter a First Name: ");
-		String firstName = scan.nextLine();
-		
-		System.out.println("Enter a Last Name: ");
-		String lastName = scan.nextLine();
-		
-		System.out.println("Enter employees Date of Birth (yyyy-mm-dd): ");
-		String dateOfBirth = InputValidation.isValidDate();		
-		
-		String email = InputValidation.isValidEmail();
-		while(eDAO.checkEmployeeEmailExists(email)) {
-			email = InputValidation.isValidEmail();
-		}
-		
-		String phone ="";
-		while(true) {
-			try {
-				System.out.println("Enter a phone number: ");
-				phone = InputValidation.isValidPhoneNumber();
-				while(eDAO.checkEmployeePhoneExists(phone)) {
-					System.out.println("This number is in the database already. Please enter a new number: ");
-					phone = InputValidation.isValidPhoneNumber();
-				}
-				break;
-			} catch (PhoneNumberException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		
-		System.out.println("Enter employee's salary: ");
-		double salary = InputValidation.validDouble();
-		
-		System.out.println("Enter employee's department id: ");
-		int deptId = InputValidation.validInterger();
-		
-		System.out.println("Enter employee's address id: ");
-		int addressId = InputValidation.validInterger();
-		
-		System.out.println("Enter employee's company id: ");
-		int companyId = InputValidation.validInterger();
-		
-		emp = new Employee(
-				-1, 
-				firstName, 
-				lastName, 
-				Date.valueOf(dateOfBirth), 
-				email, 
-				phone, 
-				salary, 
-				deptId,
-				addressId, 
-				companyId
-		);
-		
-		if(eDAO.addEmployee(emp)) {
-			Employee.tableView();
-			crudOption("employee");
-		}
-		employeeAdd();
-	}
-	
-	public static void employeeRemove() {
-		System.out.println("Enter in the id of the employee you would like to delete: ");
-		int id = InputValidation.validInterger();
-		if(eDAO.deleteEmployee(id)) {
-			System.out.println("Employee was deleted.");
-		} else {
-			System.out.println("Employee was not deleted.");
-		}
-		Employee.tableView();
-		crudOption("employee");
-	}
-	
-	public static void departmentUpdate() {
-		
-	}
-	
-	public static void departmentAdd() {
-		
-	}
-	
-	public static void departmentRemove() {
-		
-	}
-	
-	public static void departmentListEmployees() {
-		
-	}
-	
-	public static void addressUpdate() {
-		
-	}
-	
-	public static void addressAdd() {
-		
-	}
-	
-	public static void addressRemove() {
-		
-	}
-	
-	public static void addressListEmployees() {
-		
-	}
-	
-	public static void companyUpdate() {
-		
-	}
-	
-	public static void companyAdd() {
-		
-	}
-	
-	public static void companyRemove() {
-		
-	}
-	
-	public static void companyListDepartments() {
-		
-	}
-	
-	public static void companyListEmployees() {
-		
 	}
 }

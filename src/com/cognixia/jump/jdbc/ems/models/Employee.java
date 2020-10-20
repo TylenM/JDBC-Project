@@ -1,11 +1,7 @@
 package com.cognixia.jump.jdbc.ems.models;
 
 import java.sql.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.cognixia.jump.jdbc.ems.implementations.EmployeeImp;
-import com.cognixia.jump.jdbc.ems.interfaces.EmployeeDAO;
+import java.util.List;
 
 public class Employee {
 	
@@ -18,12 +14,9 @@ public class Employee {
 	private double salary;
 	private int department_id;
 	private int address_id;
-	private int company_id;
-	
-	private static EmployeeDAO eDAO = new EmployeeImp();
 	
 	public Employee(int employee_id, String first_name, String last_name, Date date_of_birth, String email,
-			String phone, double salary, int department_id, int address_id, int company_id) {
+			String phone, double salary, int department_id, int address_id) {
 		super();
 		this.employee_id = employee_id;
 		this.first_name = first_name;
@@ -34,7 +27,6 @@ public class Employee {
 		this.salary = salary;
 		this.department_id = department_id;
 		this.address_id = address_id;
-		this.company_id = company_id;
 	}
 
 	public int getEmployee_id() {
@@ -108,42 +100,26 @@ public class Employee {
 	public void setAddress_id(int address_id) {
 		this.address_id = address_id;
 	}
-
-	public int getCompany_id() {
-		return company_id;
-	}
-
-	public void setCompany_id(int company_id) {
-		this.company_id = company_id;
-	}
-
-	@Override
-	public String toString() {
-		return "Employee [employee_id=" + employee_id + ", first_name=" + first_name + ", last_name=" + last_name
-				+ ", date_of_birth=" + date_of_birth + ", email=" + email + ", phone=" + phone + ", salary=" + salary
-				+ ", department_id=" + department_id + ", address_id=" + address_id + ", company_id=" + company_id
-				+ "]";
-	}
 	
-	public static void tableView() {
+	public static void tableView(List<Employee> empList) {
 		System.out.println("\nEMPLOYEE TABLE:\n");
-		System.out.println(" =======================================================================================================================================================================================");
-		System.out.println("| employee_id	| first_name	| last_name	| date_of_birth	| email					| phone		| salary	| department_id	| address_id	| company_id	|");
-		System.out.println(" =======================================================================================================================================================================================");
-		for(Employee emp: eDAO.getAllEmployees()) {
+		System.out.println(" =======================================================================================================================================================================");
+		System.out.println("| employee_id	| first_name	| last_name	| date_of_birth	| email					| phone		| salary	| department_id	| address_id	|");
+		System.out.println(" =======================================================================================================================================================================");
+		for(Employee emp: empList) {
 			System.out.println(printEmployee(emp));
-			System.out.println(" ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(" ------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		}
 		System.out.println("");
 	}
 	
 	public static void tableViewSingleEmployee(Employee emp) {
 		System.out.println("\nEMPLOYEE TABLE:\n");
-		System.out.println(" =======================================================================================================================================================================================");
-		System.out.println("| employee_id	| first_name	| last_name	| date_of_birth	| email					| phone		| salary	| department_id	| address_id	| company_id	|");
-		System.out.println(" =======================================================================================================================================================================================");
+		System.out.println(" =======================================================================================================================================================================");
+		System.out.println("| employee_id	| first_name	| last_name	| date_of_birth	| email					| phone		| salary	| department_id	| address_id	|");
+		System.out.println(" =======================================================================================================================================================================");
 		System.out.println(printEmployee(emp));
-		System.out.println(" ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("");
 	}
 	
@@ -174,7 +150,7 @@ public class Employee {
 		} else {
 			newString  += "	| ";
 		}
-		newString += emp.getDepartment_id() + "		| " + emp.getAddress_id() + "		| " + emp.getCompany_id() + "		|";
+		newString += emp.getDepartment_id() + "		| " + emp.getAddress_id() + "		|";
 		return newString;
 	}
 	
