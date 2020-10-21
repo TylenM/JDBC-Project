@@ -57,7 +57,7 @@ public class AddressRunner {
 				address,
 				state
 		);
-		aDAO.addAddress(add);
+		aDAO.updateAddress(add);
 		addressUpdate(add);
 	}
 	

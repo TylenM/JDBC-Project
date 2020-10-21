@@ -75,9 +75,9 @@ public class Main {
 	public static void crudOption(String option) {
 		System.out.println("Pick an option (A, B, C, or D):");
 		System.out.println("-------------------------------");
-		System.out.println("A - View/Edit an " + option + ".");
-		System.out.println("B - Add an " + option + ".");
-		System.out.println("C - Remove an " + option + ".");
+		System.out.println("A - View/Edit a(n) " + option + ".");
+		System.out.println("B - Add a(n) " + option + ".");
+		System.out.println("C - Remove a(n) " + option + ".");
 		if(option.equals("department")) {
 			System.out.println("D - List all the employees in a " + option + ".");
 			System.out.println("E - Return to main menu.");
